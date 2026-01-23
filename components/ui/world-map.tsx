@@ -1,9 +1,9 @@
 "use client";
 
-// import DottedMap from "dotted-map";
+import DottedMap from "dotted-map";
 import { motion } from "motion/react";
 import Image from "next/image";
-// import { useTheme } from "next-themes";
+import { useTheme } from "next-themes";
 import { useRef } from "react";
 
 interface MapProps {
@@ -19,16 +19,16 @@ export default function WorldMap({
   lineColor = "#0ea5e9",
 }: MapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
-  // const map = new DottedMap({ height: 100, grid: "diagonal" });
+  const map = new DottedMap({ height: 100, grid: "diagonal" });
 
-  // const { theme } = useTheme();
+  const { theme } = useTheme();
 
-  // const svgMap = map.getSVG({
-  //   radius: 0.22,
-  //   color: theme === "dark" ? "#FFFFFF40" : "#00000040",
-  //   shape: "circle",
-  //   backgroundColor: "transparent",
-  // });
+  const svgMap = map.getSVG({
+    radius: 0.22,
+    color: theme === "dark" ? "#FFFFFF40" : "#00000040",
+    shape: "circle",
+    backgroundColor: "transparent",
+  });
 
   const projectPoint = (lat: number, lng: number) => {
     const x = (lng + 180) * (800 / 360);
@@ -53,14 +53,14 @@ export default function WorldMap({
 
   return (
     <div className="w-full aspect-[2/1] rounded-lg relative font-sans">
-      {/* <Image
+      <Image
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
         className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)] pointer-events-none select-none"
         alt="world map showing global connectivity"
         height={495}
         width={1056}
         draggable={false}
-      /> */}
+      />
       <svg
         ref={svgRef}
         viewBox="0 0 800 400"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-// import { submitContactForm } from "@/app/actions/submit-contact-form";
+import { submitContactForm } from "@/app/actions/submit-contact-form";
 
 export function ContactForm() {
   const [isPending, startTransition] = useTransition();
@@ -14,27 +14,27 @@ export function ContactForm() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
 
-    // startTransition(async () => {
-    //   const result = await submitContactForm(formData);
+    startTransition(async () => {
+      const result = await submitContactForm(formData);
 
-    //   if (result.success) {
-    //     setStatus({
-    //       type: "success",
-    //       message: "Thank you! Your message has been sent successfully.",
-    //     });
-    //     // Reset the form
-    //     (e.target as HTMLFormElement).reset();
-    //     // Clear success message after 5 seconds
-    //     setTimeout(() => {
-    //       setStatus({ type: null, message: "" });
-    //     }, 5000);
-    //   } else {
-    //     setStatus({
-    //       type: "error",
-    //       message: result.error || "Something went wrong. Please try again.",
-    //     });
-    //   }
-    // });
+      if (result.success) {
+        setStatus({
+          type: "success",
+          message: "Thank you! Your message has been sent successfully.",
+        });
+        // Reset the form
+        (e.target as HTMLFormElement).reset();
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setStatus({ type: null, message: "" });
+        }, 5000);
+      } else {
+        setStatus({
+          type: "error",
+          message: result.error || "Something went wrong. Please try again.",
+        });
+      }
+    });
   };
 
   return (

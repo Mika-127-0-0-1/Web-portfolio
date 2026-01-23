@@ -119,16 +119,6 @@ export async function ContactSection() {
                         LinkedIn
                       </Link>
                     )}
-                    {profile.socialLinks.twitter && (
-                      <Link
-                        href={profile.socialLinks.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
-                      >
-                        Twitter
-                      </Link>
-                    )}
                     {profile.socialLinks.website && (
                       <Link
                         href={profile.socialLinks.website}
@@ -139,27 +129,27 @@ export async function ContactSection() {
                         Website
                       </Link>
                     )}
-                    {profile.socialLinks.medium && (
+                    {profile.socialLinks.kaggle && (
                       <Link
-                        href={profile.socialLinks.medium}
+                        href={profile.socialLinks.kaggle}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
-                        Medium
+                        Kaggle
                       </Link>
                     )}
-                    {profile.socialLinks.devto && (
+                    {profile.socialLinks.dailydev && (
                       <Link
-                        href={profile.socialLinks.devto}
+                        href={profile.socialLinks.dailydev}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
-                        Dev.to
+                        Daily Dev
                       </Link>
                     )}
-                    {profile.socialLinks.youtube && (
+                    {/* {profile.socialLinks.youtube && (
                       <Link
                         href={profile.socialLinks.youtube}
                         target="_blank"
@@ -168,7 +158,7 @@ export async function ContactSection() {
                       >
                         YouTube
                       </Link>
-                    )}
+                    )} */}
                   </div>
                 </div>
               )}

@@ -116,7 +116,7 @@ export function SkillsChart({ skills }: SkillsChartProps) {
                       <ChartTooltipContent
                         indicator="line"
                         nameKey="proficiency"
-                        labelFormatter={(value) => value}
+                        labelFormatter={(value: any) => value}
                       />
                     }
                   />
@@ -126,7 +126,7 @@ export function SkillsChart({ skills }: SkillsChartProps) {
                       position="right"
                       offset={4}
                       className="fill-foreground text-[10px] font-medium"
-                      formatter={(value: number) => `${value}%`}
+                      formatter={(value: any) => `${value}%`}
                     />
                   </Bar>
                 </BarChart>

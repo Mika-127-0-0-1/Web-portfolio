@@ -14,14 +14,14 @@ import {
   TagIcon,
   UserIcon,
 } from "@sanity/icons";
-import type {StructureResolver} from 'sanity/structure'
+import type { StructureResolver } from "sanity/structure";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
-    .title('Profile Content')
+    .title("Profile Content")
     .items([
-        // Profile (Singleton)
+      // Profile (Singleton)
       S.listItem()
         .title("Profile")
         .icon(UserIcon)
@@ -177,4 +177,4 @@ export const structure: StructureResolver = (S) =>
             .schemaType("siteSettings")
             .documentId("singleton-siteSettings"),
         ),
-    ])
+    ]);

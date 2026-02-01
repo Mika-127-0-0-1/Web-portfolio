@@ -29,11 +29,13 @@ export const metadata: Metadata = {
   description: "My interactive CV",
 };
 
+// Crawler handling is now performed in `middleware.ts` (returns 503 for crawlers when maintenance is enabled)
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>

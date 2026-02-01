@@ -3,7 +3,7 @@
 import { useClerk, useUser } from "@clerk/nextjs";
 import { IconLogout, IconMenu2, IconX } from "@tabler/icons-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DynamicIcon } from "./DynamicIcon";
 import { useSidebar } from "./ui/sidebar";
 
@@ -46,7 +46,49 @@ export function FloatingDockClient({ navItems }: FloatingDockClientProps) {
   const [desktopMoreMenuOpen, setDesktopMoreMenuOpen] = useState(false);
   const [mobileMoreMenuOpen, setMobileMoreMenuOpen] = useState(false);
 
+  // bottom offset (px) to avoid overlapping the footer. Defaults to 16px.
+  const [bottomOffset, setBottomOffset] = useState<number>(16);
+
   const isSidebarOpen = isMobile ? openMobile : open;
+
+  useEffect(() => {
+    const footer = document.getElementById("contact-footer");
+    const gap = 16; // spacing between dock and footer when footer is visible
+
+    if (!footer) {
+      setBottomOffset(gap);
+      return;
+    }
+
+    function update() {
+      const rect = footer!.getBoundingClientRect();
+      // amount the footer overlaps into the viewport from the bottom
+      const overlap = Math.max(0, window.innerHeight - rect.top);
+      if (overlap > 0) {
+        setBottomOffset(overlap + gap);
+      } else {
+        setBottomOffset(gap);
+      }
+    }
+
+    // Initial check
+    update();
+
+    // Use IntersectionObserver to update when footer enters/leaves viewport
+    const io = new IntersectionObserver(() => update(), { threshold: [0, 0.01, 1] });
+    io.observe(footer);
+
+    // Also update on resize and scroll for fluid behaviour
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, { passive: true });
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update);
+    };
+  }, []);
+
 
   const links: DockLink[] = [
     ...navItems.map((item) => ({
@@ -75,9 +117,10 @@ export function FloatingDockClient({ navItems }: FloatingDockClientProps) {
       <div
         className={`hidden md:block fixed z-30 transition-all duration-300 pointer-events-none group/dock ${
           isSidebarOpen
-            ? "bottom-0 left-[calc(50%-var(--sidebar-width)/2)] -translate-x-1/2 pb-3"
-            : "bottom-4 md:left-4 md:translate-x-0 lg:left-1/2 lg:-translate-x-1/2"
+            ? "left-[calc(50%-var(--sidebar-width)/2)] -translate-x-1/2 pb-3"
+            : "md:left-4 md:translate-x-0 lg:left-1/2 lg:-translate-x-1/2"
         }`}
+        style={{ bottom: `${bottomOffset}px`, transition: "bottom 250ms ease" }}
       >
         <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl md:rounded-2xl bg-white/20 dark:bg-black/30 hover:bg-white/30 dark:hover:bg-black/40 backdrop-blur-xl border border-white/30 dark:border-white/20 hover:border-white/40 dark:hover:border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.15)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] pointer-events-auto transition-all duration-300">
           {desktop.visible.map((item) => (
